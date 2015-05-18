@@ -56,9 +56,21 @@
 	   color: red;
 
 	   }
+	   /* 加入购物车按钮 */
 	   #cartbtn
 	   {
 	   position: absolute;
 	   left: 55%;
 	   
 	   }
+	   /*购买数量输入框  */
+	   .input-group
+	   {
+	   position: absolute;
+	   left: 35%;
+	   width: 200px;
+	   height: 30px;
+	
+	   }
+	   
+	   

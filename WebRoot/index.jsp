@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        <li class="dropdown" >
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 购物车</a>
       <ul class="dropdown-menu" role="menu">
-            <li><a href="">查看我的购物车</a></li>       
+            <li><a href="<%=request.getContextPath()%>/UserCart.jsp">查看我的购物车</a></li>       
       </ul> 
       </li> 
         <li class="dropdown">
@@ -121,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
 <script src="js/common.js"> </script>
   
-</div>
+
     <hr>
   
     <center>

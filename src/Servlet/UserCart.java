@@ -52,11 +52,11 @@ public class UserCart extends HttpServlet {
 			 ArrayList<Carts> list = new ArrayList<Carts>();
 			 try {
 				Connection conn = DBHelper.getConnection();
-				String sql = "selcet userid form cart where username="+username;
+				String sql = "select userid from user where username='"+username+"'";
 				PreparedStatement ptmt = conn.prepareStatement(sql);
 				rs = ptmt.executeQuery();
 				int userid = rs.getInt("userid");
-				String sql1 = "select pid form cart where userid="+userid;
+				String sql1 = "select pid count form cart where username='"+userid+"'";
 				PreparedStatement ptmt1 = conn.prepareStatement(sql1);
 				rs1 = ptmt.executeQuery();
 				while(rs1.next()){

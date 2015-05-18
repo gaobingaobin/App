@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,22 +43,58 @@ public class CartServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		 ResultSet rs = null;
+		 ResultSet rs1 = null;
+	     String name=null;
+	     String city=null;
+	     int gross=0; //×Ü¼Û¸ñ
+	     String picture=null;
 		 HttpSession session = request.getSession();
 		 String username = (String) session.getAttribute("username");
 		 int pid = Integer.parseInt(request.getParameter("pid"));
-		 int count=  Integer.parseInt(request.getParameter("count"));	 
+		 int count=  Integer.parseInt(request.getParameter("count"));	
+		 if(username==null){
+			 response.sendRedirect(request.getContextPath()+"/NoLogin.jsp");
+		 }
 		try {
 			Connection conn = DBHelper.getConnection();
-			String sql = "select userid form user where username="+username;
+			String sql = "select userid from user where username='"+username+"'";
 			PreparedStatement ptmt = conn.prepareStatement(sql);
 			rs = ptmt.executeQuery();
+			rs.next();
 			int userid = rs.getInt("userid");
-			String sql1 = "insert into cart"+"(pid,userid,count)"+"values("+"'"+pid+"'"+","+"'"+userid+"'"+","+"'"+count+"'"+")";
+			String sql1 = "select name,city,price,picture from items where pid="+pid+"";
+			
 			PreparedStatement ptmt1 = conn.prepareStatement(sql1);
-			ptmt1.execute();	
+			rs1=ptmt1.executeQuery();
+			
+			while(rs1.next()){
+				name = rs1.getString("name");
+				city = rs1.getString("city");
+				gross = rs1.getInt("price")*count;
+				picture = rs1.getString("picture");
+			}
+			
+			String sql2 = "insert into cart"+"(pid,userid,count,name,city,picture,gross,username)"+"values" +
+					"("+pid+","+userid+","+count+","+"'"+name+"'"+","+"'"+city+"'"+","+"'"+picture+"'"+","+gross+","+"'"+username+"'"+")";
+			System.out.println(sql2);
+			PreparedStatement ptmt2 = conn.prepareStatement(sql2);
+			ptmt2.execute();
+			response.sendRedirect(request.getContextPath()+"/CartSuccess.jsp");
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			if(rs!=null){
+				try {
+					rs.close();
+					rs=null;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 		}
 
 		
