@@ -1,3 +1,4 @@
+<%@page import="dao.SearchItems"%>
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ page import="entity.Items"%>
 <%@ page import="dao.ItemsDAO"%>
@@ -17,7 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"> 
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 	
@@ -33,9 +37,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        <li class="active"><a href="<%=request.getContextPath()%>/index.jsp">网站首页</a></li> 
       <li><a href="##">关于我们</a></li>
 	 </ul>
-     <form action="<%=path %>/servlet/SearchServlet" class="navbar-form navbar-left" name="search">
+     <form action="<%=path %>/servlet/SearchServlet" class="navbar-form navbar-left" rol="search" method="post">
    	    <div class="form-group">
-   		<input type="text" class="form-control" placeholder="请输入关键词" />
+   		<input type="text" class="form-control" placeholder="请输入关键词" name="search"/>
    		<button type="submit" class="btn btn-default">搜索</button>
    	    </div>
    	    </form>
@@ -129,8 +133,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           
           <!-- 商品循环开始 -->
            <% 
-               ItemsDAO itemsDao = new ItemsDAO(); 
-               ArrayList<Items> list = itemsDao.getAllItems();
+               HttpSession session3 = request.getSession();
+               String search = (String)session3.getAttribute("search");
+               
+               SearchItems searchitem = new SearchItems(); 
+               ArrayList<Items> list = searchitem.getSearchItems(search);
                if(list!=null&&list.size()>0)
                {
 	               for(int i=0;i<list.size();i++)

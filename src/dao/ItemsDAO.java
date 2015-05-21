@@ -142,5 +142,36 @@ public class ItemsDAO {
 		}
 		
 	}
+/*	public ResultSet SelectSql(int pid)
+	{ 
+		ResultSet rs=null;
+		
+		try {
+			Connection conn = DBHelper.getConnection();
+			String sql = "select * from items pid="+pid+"";
+			PreparedStatement ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+		
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return rs;
+		
+	}*/
+	
+	public void DeleteItems(int pid)
+	{
+		try {
+			Connection conn = DBHelper.getConnection();
+			String sql = "delete  from items where pid="+pid+"";
+			PreparedStatement ptmt = conn.prepareStatement(sql);
+			 ptmt.execute();	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

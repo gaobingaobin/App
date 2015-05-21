@@ -44,6 +44,7 @@ public class CartServlet extends HttpServlet {
 			throws ServletException, IOException {
 		 ResultSet rs = null;
 		 ResultSet rs1 = null;
+		 ResultSet rs2 = null;
 	     String name=null;
 	     String city=null;
 	     int gross=0; //总价格
@@ -73,14 +74,39 @@ public class CartServlet extends HttpServlet {
 				gross = rs1.getInt("price")*count;
 				picture = rs1.getString("picture");
 			}
-			
-			String sql2 = "insert into cart"+"(pid,userid,count,name,city,picture,gross,username)"+"values" +
-					"("+pid+","+userid+","+count+","+"'"+name+"'"+","+"'"+city+"'"+","+"'"+picture+"'"+","+gross+","+"'"+username+"'"+")";
+		/*	
+		 * 
+		 * 为了防止显示两条相同产品的购买记录，存入数据库对数据进行处理一下， 数据库有此产品进行对数量和总价格的更新操作， 没有则进行插入操作
+			*/
+			String sql2 ="select count,gross from cart where username='"+username+"' and pid="+pid+"";
 			System.out.println(sql2);
 			PreparedStatement ptmt2 = conn.prepareStatement(sql2);
-			ptmt2.execute();
+			rs2=ptmt2.executeQuery();
+			
+			if(rs2.next())
+			{   
+				int count1 = rs2.getInt("count");
+				
+				int gross1 = rs2.getInt("gross");
+				int count2 =count+count1;
+				int gross2 = (gross1/count1)*count2;
+				String sql4 = "update cart set count="+count2+","+"gross="+gross2+"  where username='"+username+"' and pid="+pid+"";
+				System.out.println(sql4);
+				PreparedStatement ptmt4 = conn.prepareStatement(sql4);
+				ptmt4.executeUpdate();	
+				response.sendRedirect(request.getContextPath()+"/CartSuccess.jsp");
+			}
+			else{
+			
+			String sql3 = "insert into cart"+"(pid,userid,count,name,city,picture,gross,username)"+"values" +
+					"("+pid+","+userid+","+count+","+"'"+name+"'"+","+"'"+city+"'"+","+"'"+picture+"'"+","+gross+","+
+					"'"+username+"'"+")";
+			
+			PreparedStatement ptmt3 = conn.prepareStatement(sql3);
+			ptmt3.execute();
+			System.out.println(sql3);
 			response.sendRedirect(request.getContextPath()+"/CartSuccess.jsp");
-		
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

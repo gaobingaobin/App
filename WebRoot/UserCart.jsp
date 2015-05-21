@@ -21,11 +21,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+   <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="css/usercart.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
   </head>
-  
   <body>
+  <%
+    HttpSession session2 = request.getSession();
+   %>
+   <div id="current">
+		<div class="navbar navbar-default" role="navigation" id="menu">
+			<div class="navbar-header">
+				<a href="##" class="navbar-brand">交大理工二手网</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a
+					href="<%=request.getContextPath()%>/index.jsp">网站首页</a></li>
+
+				<li><a href="##">关于我们</a></li>
+			</ul>
+			<form action="##" class="navbar-form navbar-left" rol="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="请输入关键词" />
+					<button type="button" class="btn btn-default">搜索</button>
+				</div>
+			</form>
+			<!-- 显示购物车和 用户名称 -->
+			
+      <!--  -->
+		</div>
+		<br><br>	
+	<h2>购物车商品</h2>
     <center>
+   
     <table>
     <tr>
 				<td>商品图片</td>
@@ -34,6 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<td>商品编号</td>
 				<td>选购数量</td>
 				<td>商品总价</td>
+				<td>操作</td>
 
 	</tr>
      <%
@@ -46,6 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          for(int i=0; i<list.size(); i++){
            UserCart cart = list.get(i);
       %>
+      <form action="<%=path %>/servlet/DeleteUserGoods?pid=<%=cart.getPid() %>" method="post">
      <tr>
      <td ><a href="details.jsp?pid=<%=cart.getPid()%>"><img src="images/<%=cart.getPicture()%>" width="150" height="150" border="1"/></a></td>
      <td> <%=cart.getName() %></td>
@@ -53,7 +83,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <td><%=cart.getPid() %></td>
      <td><%=cart.getCount() %></td>
      <td><%=cart.getGross() %></td>
+     <td><button type="submit">删除</button></a></td>
      </tr>
+     </form>
     <%
         }
     }

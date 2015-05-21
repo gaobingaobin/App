@@ -62,6 +62,23 @@ public class UserCartDAO {
 		}
 
 		}
+	public ResultSet SelectSql(String username){
+		 ResultSet rs = null;
+		try {
+		
+			Connection conn = DBHelper.getConnection();
+			String sql = "select userid from user where username='"+username+"'";
+			PreparedStatement ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+		
+	}
+	
 		
 	}
 

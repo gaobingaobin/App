@@ -62,8 +62,14 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("username",username);
     			session.setAttribute("password",password);
-    			
+    			if(username.equals("gaobin")&&password.equals("gaobin"))
+    			{
+    				response.sendRedirect(request.getContextPath()+"/Administrator.jsp");
+    			}
+    			else{
+    				
     			response.sendRedirect(request.getContextPath()+"/index.jsp");
+    			}
 			}
 			else{
 			
