@@ -59,6 +59,56 @@ public class ItemsDAO {
 		}
 
 	}
+	/*
+	 * 查找函数
+	*/
+	public ArrayList<Items> getSearchItems(String searchname) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Items> list = new ArrayList<Items>(); // 商品集合
+		try {
+			conn = DBHelper.getConnection();
+			String sql = "select * from items where name like"+"'"+"%"+searchname+"%"+"'"; // SQL语句
+			stmt = conn.prepareStatement(sql);	
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Items item = new Items();
+				item.setPid(rs.getInt("pid"));
+				item.setName(rs.getString("name"));
+				item.setCity(rs.getString("city"));
+				item.setNumber(rs.getInt("number"));
+				item.setPrice(rs.getInt("price"));
+				item.setPicture(rs.getString("picture"));
+				list.add(item);// 把一个商品加入集合
+				
+			}
+			return list; // 返回集合。
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			// 释放数据集对象
+			if (rs != null) {
+				try {
+					rs.close();
+					rs = null;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			// 释放语句对象
+			if (stmt != null) {
+				try {
+					stmt.close();
+					stmt = null;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+
+	}
 
 	// 根据商品编号获得商品资料
 	public Items getItemsById(int pid) {
@@ -167,11 +217,24 @@ public class ItemsDAO {
 			Connection conn = DBHelper.getConnection();
 			String sql = "delete  from items where pid="+pid+"";
 			PreparedStatement ptmt = conn.prepareStatement(sql);
-			 ptmt.execute();	
+			ptmt.execute();	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	 public ResultSet SelectItemsPid(int pid) {
+		  ResultSet rs=null;
+		  try {
+			Connection conn = DBHelper.getConnection();
+			String sql = "select name,city,price,picture from items where pid="+pid+"";
+			PreparedStatement ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		return rs;  
+	  }
 }

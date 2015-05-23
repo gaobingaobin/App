@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.UserCartDAO;
+
 import util.DBHelper;
 
 public class DeleteUserGoods extends HttpServlet {
@@ -43,22 +45,12 @@ public class DeleteUserGoods extends HttpServlet {
 		 
 		 HttpSession session = request.getSession();
 		 String username = (String)session.getAttribute("username");
-		int pid = Integer.parseInt(request.getParameter("pid"));
-		try {
-			Connection conn = DBHelper.getConnection();
-			if(conn==null)
-			{
-				System.out.println("ªÒ»°¡¥Ω” ß∞‹£°");
-			}
-			String sql = "delete from cart where username='"+username+"' and pid="+pid+"";
-			System.out.println(sql);
-			PreparedStatement ptmt = conn.prepareStatement(sql);
-			ptmt.execute();
+		 int pid = Integer.parseInt(request.getParameter("pid"));
+		 UserCartDAO usercart = new UserCartDAO();
+		 usercart.Deletecart(username, pid);
+		
 		 response.sendRedirect(request.getContextPath()+"/UserCart.jsp");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		
 

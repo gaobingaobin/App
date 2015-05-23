@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDAO;
+
 import entity.Users;
 
 import util.DBHelper;
@@ -54,24 +56,20 @@ public class RegisterServlet extends HttpServlet {
 		 String email = request.getParameter("email");
 		 String password = request.getParameter("password");
 		 String password1 = request.getParameter("password1");
-		 
-		try {
-			Connection conn = DBHelper.getConnection();
-			if(conn==null){
-				System.out.println("¡¥Ω” ß∞‹");
-			}
-			
-			String sql ="insert into user "+"(username,email,password)"+"values("+"'"+username+"'"+","+"'"+email+"'"+","+"'"+password+"'"+")";
-			PreparedStatement ptmt = conn.prepareStatement(sql);
-			System.out.println(sql);
-		    ptmt.execute(); 
-			response.sendRedirect(request.getContextPath()+"/index.jsp");
+		 if(password.equals(password1)){
+			  
+		    UserDAO userdao = new UserDAO();
+		    userdao.InsertUser(username, email, password);
+		    response.sendRedirect(request.getContextPath()+"/index.jsp");	 
+		 }
+		 else{
+			 System.out.println("###");
+		 }
+				 
+	
+		
 		   
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 				
 
 	}

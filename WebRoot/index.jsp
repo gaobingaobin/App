@@ -33,9 +33,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        <li class="active"><a href="<%=request.getContextPath()%>/index.jsp">网站首页</a></li> 
       <li><a href="##">关于我们</a></li>
 	 </ul>
-     <form action="<%=path %>/servlet/SearchServlet" class="navbar-form navbar-left" name="search">
+     <form action="<%=path %>/servlet/SearchServlet" class="navbar-form navbar-left" >
    	    <div class="form-group">
-   		<input type="text" class="form-control" placeholder="请输入关键词" />
+   		<input type="text" class="form-control" placeholder="请输入关键词" name="search" />
    		<button type="submit" class="btn btn-default">搜索</button>
    	    </div>
    	    </form>

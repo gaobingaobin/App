@@ -23,7 +23,6 @@ public class UserCartDAO {
 		try {
 			conn = DBHelper.getConnection();
 			String sql = "select pid,name,city,count,gross,picture from cart where username='"+username+"'"; // SQLÓï¾ä
-			System.out.println(sql);
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -78,7 +77,61 @@ public class UserCartDAO {
 		return rs;
 		
 	}
-	
+	 public ResultSet Selectcart(String username, int pid) {
+		  ResultSet rs=null;
+		  try {
+			Connection conn = DBHelper.getConnection();
+			String sql = "select count,gross from cart where username='"+username+"' and pid="+pid+"";
+			PreparedStatement ptmt = conn.prepareStatement(sql);
+			rs = ptmt.executeQuery();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		return rs;  
+	  }
+	 public void Updateusercart(int count,int gross, int pid,String username){
+		 try {
+				Connection conn = DBHelper.getConnection();
+				String sql = "update cart set count="+count+","+"gross="+gross+" " +
+						" where username='"+username+"' and pid="+pid+"";
+				PreparedStatement ptmt = conn.prepareStatement(sql);
+				ptmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
+	 public void Insertusercart(int pid, int userid, int count,String name,String city,String picture,int gross,String username){
+		 try {
+				Connection conn = DBHelper.getConnection();
+				String sql = "insert into cart"+"(pid,userid,count,name,city,picture,gross,username)"+"values" +
+						"("+pid+","+userid+","+count+","+"'"+name+"'"+","+"'"+city+"'"+","+"'"+picture+"'"+","+gross+","+
+						"'"+username+"'"+")";
+				PreparedStatement ptmt = conn.prepareStatement(sql);
+				ptmt.execute();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
+	 public void  Deletecart(String username, int pid){
+		 try {
+				Connection conn = DBHelper.getConnection();
+				String sql = "delete from cart where username='"+username+"' and pid="+pid+"";
+				PreparedStatement ptmt = conn.prepareStatement(sql);
+				ptmt.execute();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
+	 }
+	 
 		
 	}
 

@@ -136,8 +136,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                HttpSession session3 = request.getSession();
                String search = (String)session3.getAttribute("search");
                
-               SearchItems searchitem = new SearchItems(); 
-               ArrayList<Items> list = searchitem.getSearchItems(search);
+               ItemsDAO itemdao = new ItemsDAO(); 
+               ArrayList<Items> list = itemdao.getSearchItems(search);
                if(list!=null&&list.size()>0)
                {
 	               for(int i=0;i<list.size();i++)

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.ItemsDAO;
+import dao.UserCartDAO;
+
 import util.DBHelper;
 
 public class CartServlet extends HttpServlet {
@@ -57,17 +60,13 @@ public class CartServlet extends HttpServlet {
 			 response.sendRedirect(request.getContextPath()+"/NoLogin.jsp");
 		 }
 		try {
-			Connection conn = DBHelper.getConnection();
-			String sql = "select userid from user where username='"+username+"'";
-			PreparedStatement ptmt = conn.prepareStatement(sql);
-			rs = ptmt.executeQuery();
+			UserCartDAO usercart = new UserCartDAO();
+			rs = usercart.SelectSql(username);
 			rs.next();
 			int userid = rs.getInt("userid");
-			String sql1 = "select name,city,price,picture from items where pid="+pid+"";
-			
-			PreparedStatement ptmt1 = conn.prepareStatement(sql1);
-			rs1=ptmt1.executeQuery();
-			
+			Connection conn = DBHelper.getConnection();
+			ItemsDAO itemdao = new  ItemsDAO();
+			rs1 = itemdao.SelectItemsPid(pid);	
 			while(rs1.next()){
 				name = rs1.getString("name");
 				city = rs1.getString("city");
@@ -78,33 +77,20 @@ public class CartServlet extends HttpServlet {
 		 * 
 		 * 为了防止显示两条相同产品的购买记录，存入数据库对数据进行处理一下， 数据库有此产品进行对数量和总价格的更新操作， 没有则进行插入操作
 			*/
-			String sql2 ="select count,gross from cart where username='"+username+"' and pid="+pid+"";
-			System.out.println(sql2);
-			PreparedStatement ptmt2 = conn.prepareStatement(sql2);
-			rs2=ptmt2.executeQuery();
-			
+			rs2 = usercart.Selectcart(username, pid);
 			if(rs2.next())
 			{   
-				int count1 = rs2.getInt("count");
-				
+				int count1 = rs2.getInt("count");	
 				int gross1 = rs2.getInt("gross");
 				int count2 =count+count1;
 				int gross2 = (gross1/count1)*count2;
-				String sql4 = "update cart set count="+count2+","+"gross="+gross2+"  where username='"+username+"' and pid="+pid+"";
-				System.out.println(sql4);
-				PreparedStatement ptmt4 = conn.prepareStatement(sql4);
-				ptmt4.executeUpdate();	
+				usercart.Updateusercart(count2, gross2, pid, username);
 				response.sendRedirect(request.getContextPath()+"/CartSuccess.jsp");
 			}
 			else{
 			
-			String sql3 = "insert into cart"+"(pid,userid,count,name,city,picture,gross,username)"+"values" +
-					"("+pid+","+userid+","+count+","+"'"+name+"'"+","+"'"+city+"'"+","+"'"+picture+"'"+","+gross+","+
-					"'"+username+"'"+")";
 			
-			PreparedStatement ptmt3 = conn.prepareStatement(sql3);
-			ptmt3.execute();
-			System.out.println(sql3);
+			usercart.Insertusercart(pid, userid, count, name, city, picture, gross, username);
 			response.sendRedirect(request.getContextPath()+"/CartSuccess.jsp");
 			}
 		} catch (Exception e) {
