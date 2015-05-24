@@ -19,10 +19,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<link rel="stylesheet" href="bootstrap/bootstrap.min.css"> 
   </head>
   
   <body>
    <p>加入购物车成功！</p>
+    <button type="submit" class="btn btn-success" ><a href="<%=request.getContextPath()%>/index.jsp">返回首页</a></button>
   </body>
 </html>

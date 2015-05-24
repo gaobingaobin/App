@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>购物车</title>
+    <title>管理员界面</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <td><%=item.getPid() %></td>
      <td><%=item.getNumber()%></td>
      <td><%=item.getPrice() %></td>
-     <td><button type="submit" >删除</button></td>
+     <td><button type="submit" class="btn btn-danger">删除</button></td>
      </tr>
      </form>
     <%

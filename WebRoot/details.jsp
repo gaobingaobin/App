@@ -159,7 +159,7 @@
 									<div class="input-group input-group-lg">
 										<span class="input-group-addon" id="sizing-addon1">数量</span> <input
 											type="text" class="form-control" placeholder="购买数量"
-											aria-describedby="sizing-addon1" name="count">
+											aria-describedby="sizing-addon1" name="count" value="1">
 									</div></td>
 							</tr>
 							<tr>

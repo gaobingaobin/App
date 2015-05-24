@@ -16,6 +16,12 @@ body{
 	margin: auto;
 	
 	}
+	/* 网站名称 */
+	h2
+	{
+	   
+	   color: red;
+	}
 	 /*主页商品表  */ 
 	   table
 	   {

@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="current">
    <div class="navbar navbar-default" role="navigation" id="menu">
   　<div class="navbar-header">
-  　    <a href="##" class="navbar-brand">交大理工二手网</a>
+  　    <a href="##" class="navbar-brand" >交大理工二手网</a>
   　</div>
     <ul class="nav navbar-nav">
        <li class="active"><a href="<%=request.getContextPath()%>/index.jsp">网站首页</a></li> 
@@ -63,7 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%=session2.getAttribute("username") %> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<%=request.getContextPath() %>/servlet/LoginOutServlet">退出</a></li> 
+            <li><a href="<%=request.getContextPath() %>/servlet/LoginOutServlet">退出</a></li>
+            <li><a href="#">查看我的信息</a></li> 
           </ul>
         </li>
       </ul>

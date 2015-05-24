@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <td><%=cart.getPid() %></td>
      <td><%=cart.getCount() %></td>
      <td><%=cart.getGross() %></td>
-     <td><button type="submit">删除</button></a></td>
+     <td><button type="submit" class="btn btn-danger">删除</button></a></td>
      </tr>
      </form>
     <%
@@ -94,5 +94,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     </table>  
     </center>
+    </div>
   </body>
 </html>
