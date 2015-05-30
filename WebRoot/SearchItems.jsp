@@ -1,4 +1,4 @@
-<%@page import="dao.SearchItems"%>
+
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ page import="entity.Items"%>
 <%@ page import="dao.ItemsDAO"%>

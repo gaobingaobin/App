@@ -49,21 +49,24 @@ public class RegisterServlet extends HttpServlet {
 
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException ,NumberFormatException {
 	
 		 request.setCharacterEncoding("utf-8");
+		 response.setCharacterEncoding("utf-8");
+		 PrintWriter out = response.getWriter();
 		 String username = request.getParameter("username");
 		 String email = request.getParameter("email");
 		 String password = request.getParameter("password");
 		 String password1 = request.getParameter("password1");
-		 if(password.equals(password1)){
+		 if(password.equals(password1)&&username!=null&&password!=null){
 			  
 		    UserDAO userdao = new UserDAO();
 		    userdao.InsertUser(username, email, password);
 		    response.sendRedirect(request.getContextPath()+"/index.jsp");	 
 		 }
 		 else{
-			 System.out.println("###");
+			 out.print("ÃÜÂë²»Ò»ÖÂ£¡");
+			
 		 }
 				 
 	

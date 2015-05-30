@@ -1,3 +1,5 @@
+<%@page import="entity.Levmessage"%>
+<%@page import="dao.MessageDAO"%>
 <%@ page language="java" import="java.util.*"
 	contentType="text/html; charset=utf-8"%>
 <%@ page import="entity.Items"%>
@@ -71,7 +73,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%=session2.getAttribute("username") %> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<%=request.getContextPath() %>/servlet/LoginOutServlet">退出</a></li> 
+            <li><a href="<%=request.getContextPath() %>/servlet/LoginOutServlet">退出</a></li>
+            <li><a href="#">查看我的信息</a></li> 
+            <li><a href="#">上传我的货物</a></li>  
           </ul>
         </li>
       </ul>
@@ -92,7 +96,7 @@
     <label for="exampleInputPassword1">&nbsp;&nbsp;&nbsp;密码</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" name="password">
   </div>
-  <button type="submit" class="btn btn-default">登录</button>
+  <button type="submit" class="btn btn-info ">登录</button>
 </form>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -117,7 +121,7 @@
   <div class="form-group">
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="请再次输入密码" name="password1">
   </div>
-  <button type="submit" class="btn btn-default">注册</button>
+  <button type="submit" class="btn btn-info ">注册</button>
 </form>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -132,8 +136,7 @@
 				<!-- 商品详情 -->
 				<%
 					ItemsDAO itemDao = new ItemsDAO();
-					Items item = itemDao.getItemsById(Integer.parseInt(request
-							.getParameter("pid")));
+					Items item = itemDao.getItemsById(Integer.parseInt(request.getParameter("pid")));
 					if (item != null) {
 				%>
 				<td width="70%" valign="top">
@@ -169,7 +172,35 @@
 							</tr>
 						</table>
 					</form>
+					<br><br>
+					<div>
+					<h3>用户评价</h3><hr>
+					<%
+					MessageDAO message = new MessageDAO();
+					ArrayList<Levmessage> list = message.getAllMessagePid(Integer.parseInt(request.getParameter("pid")));
+					if(list!=null && list.size()>0){
+					 for(int i=0; i<list.size();i++)
+					 {
+					  Levmessage levmessage = list.get(i);
+					 
+					 %>
+					<p><%=levmessage.getUsername() %>&nbsp; &nbsp;评价时间:<%=levmessage.getMdate() %></p>
+					<p><%=levmessage.getMessage() %></p>
+					<hr>
+					<%
+					 }
+					
+					}
+					
+					 %>
+					<form action="<%=path%>/servlet/MessageServlet?pid=<%=request.getParameter("pid")%>" method="post">
+					
+					<textarea rows="4" cols="60" name="message"></textarea><br>
+					<button type="submit" class="btn btn-default" >留言</button>				
+					</form>
+					</div>
 				</td>
+				
 				<%
 					}
 				%>
@@ -221,15 +252,22 @@
 							</dd>
 						</dl>
 					</div>
-					</div> <%
+					<%
  	}
  	}
  %> <!-- 循环结束 -->
-				</td>
-			</tr>
+ </td>
+			</div> 
 
+ 
 		</table>
-
+   <div class="footer">
+    <ul>
+    <li><a href="#">关于二手网</a></li>
+    <li><a href="#">联系我们</a></li>
+    <li><a href="#">加入我们</a></li>
+    </ul>
+    </div>
 	</div>
 	
 </body>

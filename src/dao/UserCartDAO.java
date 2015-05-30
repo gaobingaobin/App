@@ -63,11 +63,12 @@ public class UserCartDAO {
 		}
 	public ResultSet SelectSql(String username){
 		 ResultSet rs = null;
+		 PreparedStatement ptmt=null;
 		try {
 		
 			Connection conn = DBHelper.getConnection();
 			String sql = "select userid from user where username='"+username+"'";
-			PreparedStatement ptmt = conn.prepareStatement(sql);
+			ptmt = conn.prepareStatement(sql);
 			rs = ptmt.executeQuery();
 		
 		} catch (Exception e) {
@@ -75,6 +76,7 @@ public class UserCartDAO {
 			e.printStackTrace();
 		}
 		return rs;
+		
 		
 	}
 	 public ResultSet Selectcart(String username, int pid) {

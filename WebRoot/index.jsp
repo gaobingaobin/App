@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+   
 	
   </head>
   
@@ -65,6 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <ul class="dropdown-menu" role="menu">
             <li><a href="<%=request.getContextPath() %>/servlet/LoginOutServlet">退出</a></li>
             <li><a href="#">查看我的信息</a></li> 
+             <li><a href="#">上传我的货物</a></li>  
           </ul>
         </li>
       </ul>
@@ -85,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <label for="exampleInputPassword1">&nbsp;&nbsp;&nbsp;密码</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" name="password">
   </div>
-  <button type="submit" class="btn btn-default">登录</button>
+  <button type="submit" class="btn btn-info ">登录</button>
 </form>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -110,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="form-group">
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="请再次输入密码" name="password1">
   </div>
-  <button type="submit" class="btn btn-default">注册</button>
+  <button type="submit" class="btn btn-info ">注册</button>
 </form>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -118,9 +120,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 注册的弹出框 -->
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
-<script src="js/common.js"> </script>
-  
+ <script src="js/Ajax.js"> </script>
+ <script src="js/common.js"> </script>
 
+  
     <hr>
   
     <center>
@@ -157,6 +160,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </td>
       </tr>
     </table>
+    
+    <div class="footer">
+    <ul>
+    <li><a href="#">关于二手网</a></li>
+    <li><a href="#">联系我们</a></li>
+    <li><a href="#">加入我们</a></li>
+    </ul>
+    </div>
     </center>
     </div>
   </body>
