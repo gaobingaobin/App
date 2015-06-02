@@ -72,7 +72,7 @@ public class MessageServlet extends HttpServlet {
 		}
 		else{
 			
-			response.sendRedirect(request.getContextPath()+"/details.jsp");
+			response.sendRedirect(request.getContextPath()+"/NoLogin.jsp");
 			
 		}
 		

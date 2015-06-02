@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 
 import util.DBHelper;
+import util.PasswordMD5;
 
 public class LoginServlet extends HttpServlet {
 
@@ -48,12 +49,17 @@ public class LoginServlet extends HttpServlet {
 		 boolean a;
 		 request.setCharacterEncoding("utf-8");
 		 response.setCharacterEncoding("utf-8");
+		 PasswordMD5 passwordmd5 = new PasswordMD5(); //实例化MD5加密类
+		 UserDAO userdao = new UserDAO(); //实例化操作user表的类
 		 //PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String Initialpassword = request.getParameter("password");
+		byte[] bytepassword = Initialpassword.getBytes();
+		String password = passwordmd5.getMD5(bytepassword);
+		System.out.println(password);
+		
 		try {
-			
-			UserDAO userdao = new UserDAO();
+		   
 			rs = userdao.SelectUser(username, password);
 			if( rs.next()){
 				HttpSession session = request.getSession();

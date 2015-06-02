@@ -16,6 +16,7 @@ import dao.UserDAO;
 import entity.Users;
 
 import util.DBHelper;
+import util.PasswordMD5;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -53,19 +54,24 @@ public class RegisterServlet extends HttpServlet {
 	
 		 request.setCharacterEncoding("utf-8");
 		 response.setCharacterEncoding("utf-8");
+		 response.setContentType("text/html;charset=utf-8");
 		 PrintWriter out = response.getWriter();
+		 PasswordMD5 passwordmd5 = new PasswordMD5();
+		 UserDAO userdao = new UserDAO();
 		 String username = request.getParameter("username");
+		 
+		 
 		 String email = request.getParameter("email");
-		 String password = request.getParameter("password");
-		 String password1 = request.getParameter("password1");
-		 if(password.equals(password1)&&username!=null&&password!=null){
-			  
-		    UserDAO userdao = new UserDAO();
+		 String Initialpassword = request.getParameter("password");
+		 String Initialpassword1 = request.getParameter("password1");
+		 if(Initialpassword.equals(Initialpassword1)&&username!=null&&Initialpassword!=null){ 
+			byte[] bytepassword = Initialpassword.getBytes();
+			String password = passwordmd5.getMD5(bytepassword);
 		    userdao.InsertUser(username, email, password);
 		    response.sendRedirect(request.getContextPath()+"/index.jsp");	 
 		 }
 		 else{
-			 out.print("ÃÜÂë²»Ò»ÖÂ£¡");
+			 response.sendRedirect(request.getContextPath()+"/PasswordError.jsp");
 			
 		 }
 				 
