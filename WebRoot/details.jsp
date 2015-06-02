@@ -135,7 +135,7 @@
 			<tr>
 				<!-- 商品详情 -->
 				<%
-					ItemsDAO itemDao = new ItemsDAO();
+					ItemsDAO itemDao = new ItemsDAO();	
 					Items item = itemDao.getItemsById(Integer.parseInt(request.getParameter("pid")));
 					if (item != null) {
 				%>
@@ -184,7 +184,7 @@
 					  Levmessage levmessage = list.get(i);
 					 
 					 %>
-					<p><%=levmessage.getUsername() %>&nbsp; &nbsp;评价时间:<%=levmessage.getMdate() %></p>
+					<p class="messagename"><%=levmessage.getUsername() %>&nbsp;&nbsp;评价时间:<%=levmessage.getMdate() %></p>
 					<p><%=levmessage.getMessage() %></p>
 					<hr>
 					<%

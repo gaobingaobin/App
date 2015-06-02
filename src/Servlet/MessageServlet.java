@@ -49,10 +49,12 @@ public class MessageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserCartDAO usercart = new UserCartDAO();
 		String username = (String) session.getAttribute("username");
+		if(username!=null){
 		rs = usercart.SelectSql(username);
 		try {
 			rs.next();
 			int userid = rs.getInt("userid");
+			System.out.println(userid);
 			int pid = Integer.parseInt(request.getParameter("pid"));
 			String message = request.getParameter("message");
 			
@@ -67,7 +69,12 @@ public class MessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
+		}
+		else{
+			
+			response.sendRedirect(request.getContextPath()+"/details.jsp");
+			
+		}
 		
 		
 
